@@ -15,10 +15,10 @@ const Tasks = () => {
 						<h1 className="font-semibold text-3xl">Tasks</h1>
 					</div>
 					<div className="flex gap-5">
-						<button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10  grid place-content-center text-secondary hover:text-white transition-all">
+						<button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-md h-10 w-10  grid place-content-center text-secondary hover:text-white transition-all">
 							<MagnifyingGlassIcon className="h-6 w-6" />
 						</button>
-						<button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10 grid place-content-center text-secondary hover:text-white transition-all">
+						<button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-md h-10 w-10 grid place-content-center text-secondary hover:text-white transition-all">
 							<BellIcon className="h-6 w-6" />
 						</button>
 						<button
