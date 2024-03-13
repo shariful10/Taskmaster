@@ -1,11 +1,17 @@
-import { useForm } from "react-hook-form";
 import Modal from "../ui/Model";
+import { useForm } from "react-hook-form";
 
 const AddTaskModal = ({ isOpen, setIsOpen }) => {
-	const { register, handleSubmit } = useForm();
+	const { register, handleSubmit, reset } = useForm();
+
+	const onCancel = () => {
+		reset();
+		setIsOpen(false);
+	};
 
 	const onSubmit = (data) => {
 		console.log(data);
+		onCancel();
 	};
 
 	return (
@@ -87,8 +93,8 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
 				<div className="flex justify-between items-center">
 					<input
 						type="button"
-						value="Cencel"
-            onClick={() => setIsOpen(false)}
+						value="Cancel"
+						onClick={() => onCancel()}
 						className="btn btn-danger cursor-pointer"
 					/>
 					<input
