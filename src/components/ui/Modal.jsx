@@ -1,7 +1,8 @@
 import { Fragment } from "react";
+import { IoClose } from "react-icons/io5";
 import { Dialog, Transition } from "@headlessui/react";
 
-const Modal = ({ isOpen, setIsOpen, title, children }) => {
+const Modal = ({ isOpen, setIsOpen, title, children, showClose }) => {
 	const closeModal = () => {
 		setIsOpen(false);
 	};
@@ -35,9 +36,16 @@ const Modal = ({ isOpen, setIsOpen, title, children }) => {
 							<Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
 								<Dialog.Title
 									as="h3"
-									className="text-lg font-medium leading-6 text-gray-900"
+									className="text-lg font-medium leading-6 text-gray-900 flex justify-between items-center mb-2"
 								>
-									{title}
+									<span>{title}</span>
+									{showClose && (
+										<IoClose
+											onClick={() => setIsOpen(false)}
+											className="cursor-pointer"
+											size={22}
+										/>
+									)}
 								</Dialog.Title>
 								{children}
 							</Dialog.Panel>

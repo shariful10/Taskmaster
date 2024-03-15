@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import Modal from "../ui/Model";
+import Modal from "../ui/Modal";
 import { useForm } from "react-hook-form";
 import { addTask } from "../../redux/features/tasks/tasksSlice";
 
