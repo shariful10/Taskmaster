@@ -1,8 +1,8 @@
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginImage from "../assets/image/login.svg";
 import { useForm, useWatch } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { createUser } from "../redux/features/users/usersSlice";
 
 const Signup = () => {
@@ -28,9 +28,10 @@ const Signup = () => {
 		}
 	}, [password, confirmPassword]);
 
+  useEffect(() => {}, []);
+
 	const onSubmit = ({ name, email, password }) => {
 		dispatch(createUser({ name, email, password }));
-		console.log(name, email, password);
 	};
 
 	const handleGoogleLogin = () => {
