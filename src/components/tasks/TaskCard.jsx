@@ -1,12 +1,42 @@
-import {
-	removeTask,
-	updateStatus,
-} from "../../redux/features/tasks/tasksSlice";
-import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useRemoveTaskMutation, useUpdateTaskMutation } from "../../redux/features/tasks/tasksApi";
 
 const TaskCard = ({ task }) => {
-	const dispatch = useDispatch();
+	const [updateTask] = useUpdateTaskMutation();
+  const [removeTask] = useRemoveTaskMutation();
+
+	const handleUpdate = (id, updatedStatus) => {
+		const data = {
+			status: updatedStatus,
+		};
+
+		const options = {
+			id: id,
+			data: data,
+		};
+
+		updateTask(options);
+		toast.success(
+			`Task is ${
+				task.status === "pending"
+					? "In progress"
+					: task.status === "running"
+					? "Completed"
+					: "Archived"
+			} now.`
+		);
+	};
+
+  const handleRemove = async (id) => {
+    try {
+      await removeTask(id);
+      toast.success("Task removed successfully");
+    } catch (error) {
+      console.error("Error removing task:", error);
+      toast.error("Failed to remove task");
+    }
+  };
 
 	let updatedStatus;
 
@@ -37,15 +67,13 @@ const TaskCard = ({ task }) => {
 				<p>{task?.date}</p>
 				<div className="flex gap-3">
 					<button
-						onClick={() => dispatch(removeTask(task.id))}
+						onClick={() => handleRemove(task._id)}
 						title="Delete Task"
 					>
 						<TrashIcon className="h-5 w-5 text-red-500" />
 					</button>
 					<button
-						onClick={() =>
-							dispatch(updateStatus({ id: task._id, status: updatedStatus }))
-						}
+						onClick={() => handleUpdate(task._id, updatedStatus)}
 						title="Update Status"
 					>
 						<ArrowRightIcon className="h-5 w-5 text-primary" />

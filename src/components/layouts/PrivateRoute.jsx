@@ -20,12 +20,13 @@ const PrivateRoute = ({ children }) => {
 						email: user.email,
 					})
 				);
+
 				dispatch(toggleLoading(false));
 			} else {
 				dispatch(toggleLoading(false));
 			}
 		});
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	if (isLoading) {

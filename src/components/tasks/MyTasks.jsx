@@ -2,51 +2,68 @@ import {
 	CheckIcon,
 	DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateStatus, userTasks } from "../../redux/features/tasks/tasksSlice";
+import { useState } from "react";
 import TaskDetailsModal from "./TaskDetailsModal";
+import { useSelector } from "react-redux";
+// import { updateStatus } from "../../redux/features/tasks/tasksSlice";
+import {
+	useGetTasksQuery,
+	useUpdateTaskMutation,
+} from "../../redux/features/tasks/tasksApi";
+import toast from "react-hot-toast";
 
 const MyTasks = () => {
-	const dispatch = useDispatch();
-  const [taskId, setTaskId] = useState(0);
+	// const dispatch = useDispatch();
+	const [taskId, setTaskId] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 
-	const { tasks, userSpecificTasks } = useSelector((state) => state.tasksSlice);
-	const { name: userName } = useSelector((state) => state.userSlice);
+	const { data: tasks } = useGetTasksQuery();
+	const [updateTask] = useUpdateTaskMutation();
+	const { name } = useSelector((state) => state.userSlice);
+	const userSpecificTasks = tasks?.filter(
+		(item) => item?.assignedTo === name && item.status !== "archive"
+	);
 
-	useEffect(() => {
-		dispatch(userTasks(userName));
-	}, [dispatch, userName, tasks]);
+	const handleUpdate = (id, updatedStatus) => {
+		const data = {
+			status: updatedStatus,
+		};
 
-  const handleModal = (id) => {
-    setTaskId(id)
-    setIsOpen(!isOpen)
-  };
+		const options = {
+			id: id,
+			data: data,
+		};
+
+		updateTask(options);
+		toast.success("Task is Completed now.");
+	};
+
+	const handleModal = (id) => {
+		setTaskId(id);
+		setIsOpen(!isOpen);
+	};
 
 	return (
 		<div>
 			<TaskDetailsModal isOpen={isOpen} setIsOpen={setIsOpen} id={taskId} />
 			<h1 className="text-xl my-3">My Tasks</h1>
 			<div className=" h-[750px] overflow-auto space-y-3">
-				{userSpecificTasks.map((item) => (
+				{userSpecificTasks?.map((item) => (
 					<div
-						key={item.id}
+						key={item._id}
 						className="bg-secondary/10 rounded-md p-3 flex justify-between"
 					>
 						<h1>{item.title}</h1>
 						<div className="flex gap-3">
 							<button
-								onClick={() => handleModal(item.id)}
+								onClick={() => handleModal(item._id)}
 								className="grid place-content-center"
 								title="Details"
 							>
 								<DocumentMagnifyingGlassIcon className="w-5 h-5 text-primary" />
 							</button>
 							<button
-								onClick={() =>
-									dispatch(updateStatus({ id: item.id, status: "done" }))
-								}
+								onClick={() => handleUpdate(item._id, "done")}
 								className="grid place-content-center"
 								title="Done"
 							>

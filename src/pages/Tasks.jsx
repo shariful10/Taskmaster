@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { images } from "../utils/data";
 import MyTasks from "../components/tasks/MyTasks";
 import TaskCard from "../components/tasks/TaskCard";
 import MenuDropdown from "../components/ui/MenuDropdown";
 import AddTaskModal from "../components/tasks/AddTaskModal";
-import { useGetTasksQuery } from "../redux/features/api/baseApi";
+import { useGetTasksQuery } from "../redux/features/tasks/tasksApi";
 import { BellIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 const Tasks = () => {
@@ -35,9 +36,9 @@ const Tasks = () => {
 							Add Task
 						</button>
 						<MenuDropdown>
-							<div className="h-10 w-10 rounded-xl overflow-hidden">
+							<div className="h-10 w-10 rounded-full overflow-hidden">
 								<img
-									src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=644&q=80"
+									src="https://i.ibb.co/Qdt6ZXQ/Shariful.jpg"
 									alt=""
 									className="object-cover h-full w-full "
 								/>
@@ -47,7 +48,7 @@ const Tasks = () => {
 					</div>
 				</div>
 				<div className="grid grid-cols-3 gap-5 mt-10">
-					<div className="relative h-[800px] overflow-auto">
+					<div className="relative pb-5">
 						<div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
 							<h1>Up Next</h1>
 							<p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
@@ -60,7 +61,7 @@ const Tasks = () => {
 							))}
 						</div>
 					</div>
-					<div className="relative h-[800px] overflow-auto">
+					<div className="relative pb-5">
 						<div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
 							<h1>In Progress</h1>
 							<p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
@@ -73,7 +74,7 @@ const Tasks = () => {
 							))}
 						</div>
 					</div>
-					<div className="relative h-[800px] overflow-auto">
+					<div className="relative pb-5">
 						<div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
 							<h1>Completed</h1>
 							<p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
@@ -92,41 +93,11 @@ const Tasks = () => {
 				<div>
 					<h1 className="text-xl">Members</h1>
 					<div className="flex gap-3 mt-3">
-						<div className="h-10 w-10 rounded-xl overflow-hidden">
-							<img
-								src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-								alt=""
-								className="object-cover h-full w-full "
-							/>
-						</div>
-						<div className="h-10 w-10 rounded-xl overflow-hidden">
-							<img
-								src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-								alt=""
-								className="object-cover h-full w-full "
-							/>
-						</div>
-						<div className="h-10 w-10 rounded-xl overflow-hidden">
-							<img
-								src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-								alt=""
-								className="object-cover h-full w-full "
-							/>
-						</div>
-						<div className="h-10 w-10 rounded-xl overflow-hidden">
-							<img
-								src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-								alt=""
-								className="object-cover h-full w-full "
-							/>
-						</div>
-						<div className="h-10 w-10 rounded-xl overflow-hidden">
-							<img
-								src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-								alt=""
-								className="object-cover h-full w-full "
-							/>
-						</div>
+						{images.map(({ img }, idx) => (
+							<div key={idx} className="h-10 w-10 rounded-full overflow-hidden">
+								<img src={img} alt="" className="object-cover h-full w-full" />
+							</div>
+						))}
 					</div>
 				</div>
 				<MyTasks />

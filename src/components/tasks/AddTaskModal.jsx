@@ -1,11 +1,13 @@
-import { useDispatch } from "react-redux";
 import Modal from "../ui/Modal";
+import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import { addTask } from "../../redux/features/tasks/tasksSlice";
+import { membersName } from "../../utils/data";
+import { useAddTasksMutation } from "../../redux/features/tasks/tasksApi";
 
 const AddTaskModal = ({ isOpen, setIsOpen }) => {
-	const dispatch = useDispatch();
 	const { register, handleSubmit, reset } = useForm();
+
+	const [addTask] = useAddTasksMutation();
 
 	const onCancel = () => {
 		reset();
@@ -13,8 +15,9 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
 	};
 
 	const onSubmit = (data) => {
-		dispatch(addTask(data));
+		addTask({ ...data, status: "pending" });
 		onCancel();
+		toast.success("Task Added Successfully.");
 	};
 
 	return (
@@ -62,19 +65,11 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
 						id="assignedTo"
 						{...register("assignedTo")}
 					>
-						<option value="Sk Shariful Islam">Sk Shariful Islam</option>
-						<option value="Mir Hossain">Mir Hossain</option>
-						<option value="Nahid Hasan">Nahid Hasan</option>
-						<option value="Mizanur Rahman">Mizanur Rahman</option>
-						<option value="Tonmoy Parvez">Tonmoy Parvez</option>
-						<option value="Fahim Ahmed">Fahim Ahmed</option>
-						<option value="Rahatul Islam">Rahatul Islam</option>
-						<option value="Samim Ravi">Samim Ravi</option>
-						<option value="Mehedi Anik">Mehedi Anik</option>
-						<option value="Ehtisam Hoque">Ehtisam Hoque</option>
-						<option value="Muktadir Hasan">Muktadir Hasan</option>
-						<option value="Anisur Rahman">Anisur Rahman</option>
-						<option value="Masud Alam">Masud Alam</option>
+						{membersName.map(({ name }, idx) => (
+							<option key={idx} value={name}>
+								{name}
+							</option>
+						))}
 					</select>
 				</div>
 				<div className="flex flex-col mb-5">
