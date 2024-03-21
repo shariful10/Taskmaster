@@ -44,7 +44,7 @@ const TaskCard = ({ task }) => {
 					</button>
 					<button
 						onClick={() =>
-							dispatch(updateStatus({ id: task.id, status: updatedStatus }))
+							dispatch(updateStatus({ id: task._id, status: updatedStatus }))
 						}
 						title="Update Status"
 					>
